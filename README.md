@@ -19,31 +19,31 @@ The **Creative Director coordinates three specialist agents: Researcher, Writer 
 An **Idea Partner** shapes the initial idea in the broader product concept. It is not a separate executable agent in the archived October 2026 Phase 1 canvas.
 
 ```mermaid
-%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Arial, Helvetica, sans-serif", "fontSize": "15px", "primaryColor": "#FFFFFF", "primaryTextColor": "#111111", "primaryBorderColor": "#111111", "lineColor": "#555555", "secondaryColor": "#F2F2F2", "tertiaryColor": "#FFFFFF", "edgeLabelBackground": "#FFFFFF"}}}%%
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, Helvetica, sans-serif","fontSize":"15px","primaryColor":"#FF555A","primaryTextColor":"#FFFFFF","primaryBorderColor":"#FF555A","lineColor":"#858585","secondaryColor":"#858585","tertiaryColor":"#F0F0F0","edgeLabelBackground":"#FFFFFF"}}}%%
 flowchart TB
-    IDEA["IDEA PARTNER<br/>Broader concept"] -.-> BRIEF["01 / IDEA BRIEF<br/>WordPress and validation"]
-    BRIEF --> CD["02 / CREATIVE DIRECTOR<br/>Coordinating agent"]
+    IDEA("IDEA PARTNER<br/>Broader concept") -.-> BRIEF("01 / IDEA BRIEF<br/>WordPress and validation")
+    BRIEF --> CD("02 / CREATIVE DIRECTOR<br/>Coordinating agent")
 
-    CD <--> RESEARCH["RESEARCHER<br/>Phase 1 available"]
-    CD -.-> WRITER["WRITER<br/>Later gated phase"]
-    CD -.-> EDITOR["EDITOR<br/>Later gated phase"]
+    CD <--> RESEARCH("RESEARCHER<br/>Phase 1 available")
+    CD -.-> WRITER("WRITER<br/>Later gated phase")
+    CD -.-> EDITOR("EDITOR<br/>Later gated phase")
 
-    CD --> PROPOSAL["03 / EDITORIAL DIRECTION<br/>Structured proposal"]
+    CD --> PROPOSAL("03 / EDITORIAL DIRECTION<br/>Structured proposal")
     PROPOSAL --> HUMAN{"04 / HUMAN REVIEW"}
-    HUMAN -->|NOT APPROVED| HOLD["STOP / AWAIT DECISION"]
+    HUMAN -->|NOT APPROVED| HOLD("STOP / AWAIT DECISION")
     HUMAN -.->|FUTURE APPROVAL| WRITER
     WRITER -.-> EDITOR
-    EDITOR -.-> PUBLISH["SEPARATE PUBLICATION DECISION"]
+    EDITOR -.-> PUBLISH("SEPARATE PUBLICATION DECISION")
 
-    classDef ink fill:#111111,stroke:#111111,color:#FFFFFF,stroke-width:2px;
-    classDef outline fill:#FFFFFF,stroke:#111111,color:#111111,stroke-width:1.6px;
-    classDef muted fill:#F0F0F0,stroke:#888888,color:#111111,stroke-width:1.3px;
-    classDef future fill:#F0F0F0,stroke:#888888,color:#555555,stroke-width:1.3px,stroke-dasharray:5 4;
-    class CD,HUMAN ink;
-    class BRIEF,RESEARCH,PROPOSAL outline;
+    classDef primary fill:#FF555A,stroke:#FF555A,color:#FFFFFF,stroke-width:1.5px;
+    classDef secondary fill:#858585,stroke:#858585,color:#FFFFFF,stroke-width:1.2px;
+    classDef annotation fill:#F0F0F0,stroke:#C7C7C7,color:#111111,stroke-width:1px;
+    classDef future fill:#F0F0F0,stroke:#999999,color:#555555,stroke-width:1.2px,stroke-dasharray:5 4;
+    class CD,HUMAN primary;
+    class BRIEF,RESEARCH,PROPOSAL secondary;
     class IDEA,WRITER,EDITOR,PUBLISH future;
-    class HOLD muted;
-    linkStyle default stroke:#555555,stroke-width:1.5px;
+    class HOLD annotation;
+    linkStyle default stroke:#858585,stroke-width:1.5px;
 ```
 
 **Solid lines** describe the verified Phase 1 direction and review path. **Dashed lines** show conceptual or later gated stages; they do not imply those stages were tested end to end. The Creative Director, Researcher, Writer and Editor nodes are present in the private n8n export, but Writer and Editor were not permitted to run during the verified Phase 1 workflow.
