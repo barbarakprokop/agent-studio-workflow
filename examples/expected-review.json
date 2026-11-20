@@ -1,0 +1,22 @@
+{
+  "brief_id": "demo_brief_001",
+  "article_id": "demo_article_001",
+  "status": "awaiting_human_editorial_approval",
+  "editorial_direction": {
+    "angle": "Automate repetitive preparation, not consequential judgment.",
+    "opening": "Begin with a deliberately mundane workflow that contains one high-stakes decision.",
+    "outline": [
+      "Map the actual work",
+      "Separate mechanical steps from judgment calls",
+      "Design the handoff and human review",
+      "Measure whether the workflow actually improved"
+    ],
+    "research_needed": [
+      "Find credible published examples before drafting"
+    ]
+  },
+  "human_review_required": true,
+  "can_draft": false,
+  "can_publish": false,
+  "synthetic": true
+}
