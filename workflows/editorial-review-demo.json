@@ -1,0 +1,99 @@
+{
+  "name": "Agent Studio | Synthetic human review boundary",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c642e8a2-cb8f-4a57-b221-45c86a0f9230",
+      "name": "Manual trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json: {\"brief_id\": \"demo_brief_001\", \"article_id\": \"demo_article_001\", \"title\": \"When should a team not automate a workflow?\", \"audience\": \"Product designers and small technology teams\", \"editorial_question\": \"How can teams distinguish repetitive tasks from decisions requiring judgment?\", \"constraints\": [\"Use a concrete example\", \"Explain human review explicitly\", \"Do not invent sources or metrics\"], \"synthetic\": true}}];"
+      },
+      "id": "4a1169d0-980f-48a4-8c36-c2d11200de01",
+      "name": "Synthetic idea brief",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const brief = $input.first().json;\nif (brief.synthetic !== true || !/^[A-Za-z0-9_\\-]{1,120}$/.test(brief.brief_id || '') || !/^[A-Za-z0-9_\\-]{1,120}$/.test(brief.article_id || '') || typeof brief.editorial_question !== 'string' || !brief.editorial_question.trim()) {\n  throw new Error('Invalid synthetic brief: refusing to continue');\n}\nreturn [{json: {\n  brief_id: brief.brief_id,\n  article_id: brief.article_id,\n  status: 'proposal_ready_for_review',\n  editorial_direction: {\n    angle: 'Automate repetitive preparation, not consequential judgment.',\n    opening: 'Begin with a deliberately mundane workflow that contains one high-stakes decision.',\n    outline: ['Map the actual work', 'Separate mechanical steps from judgment calls', 'Design the handoff and human review', 'Measure whether the workflow actually improved'],\n    research_needed: ['Find credible published examples before drafting']\n  },\n  synthetic: true\n}}];"
+      },
+      "id": "935c4307-82b3-41ce-8415-872a9d03ea45",
+      "name": "Validate and mock direction",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const proposal = $input.first().json;\nif (proposal.synthetic !== true || !proposal.editorial_direction || !Array.isArray(proposal.editorial_direction.outline)) {\n  throw new Error('Proposal contract invalid: review cannot proceed');\n}\nreturn [{json: {\n  ...proposal,\n  status: 'awaiting_human_editorial_approval',\n  human_review_required: true,\n  can_draft: false,\n  can_publish: false\n}}];"
+      },
+      "id": "8f7029f0-aaf1-41b6-8a2d-5ce75cf99d62",
+      "name": "Stop at human review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Manual trigger": {
+      "main": [
+        [
+          {
+            "node": "Synthetic idea brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthetic idea brief": {
+      "main": [
+        [
+          {
+            "node": "Validate and mock direction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate and mock direction": {
+      "main": [
+        [
+          {
+            "node": "Stop at human review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}
