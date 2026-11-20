@@ -1,0 +1,13 @@
+{
+  "brief_id": "demo_brief_001",
+  "article_id": "demo_article_001",
+  "title": "When should a team not automate a workflow?",
+  "audience": "Product designers and small technology teams",
+  "editorial_question": "How can teams distinguish repetitive tasks from decisions requiring judgment?",
+  "constraints": [
+    "Use a concrete example",
+    "Explain human review explicitly",
+    "Do not invent sources or metrics"
+  ],
+  "synthetic": true
+}
