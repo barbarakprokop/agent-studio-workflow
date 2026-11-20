@@ -1,5 +1,7 @@
 # Agent Studio
 
+![agent-studio-workflow interface preview](https://barbarakprokop.com/wp-content/uploads/2026/11/AGENT_STUDIO-scaled.webp)
+
 **Designing an editorial workflow where AI proposes, and people decide.**
 
 Agent Studio is an experiment in structuring editorial work across specialized AI roles without handing editorial judgment or publication to an autonomous system. I designed the workflow, the review experience, and the integrations between a WordPress interface and n8n.
