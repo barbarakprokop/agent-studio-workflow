@@ -8,35 +8,40 @@ This repository is a **public technical companion**, not the production applicat
 
 [Read the portfolio case study](https://barbarakprokop.com/productdesign/agent-studio-case-study/) · [Product design portfolio](https://barbarakprokop.com/productdesign/)
 
-## How the system is designed
+## Multi-agent architecture
+
+The **Creative Director coordinates three specialist agents: Researcher, Writer and Editor**. That orchestration is the central design idea. Instead of treating editorial production as a single prompt, Agent Studio separates research, drafting and independent review into distinct responsibilities.
+
+An **Idea Partner** shapes the initial idea in the broader product concept. It is not a separate executable agent in the archived October 2026 Phase 1 canvas.
 
 ```mermaid
 flowchart TD
-    A[Idea brief in WordPress] --> B[Authenticated WordPress proxy]
-    B --> C[n8n validation and article state]
-    C --> D[Creative Director]
-    D <--> E[Researcher]
-    D --> F[Structured editorial direction]
-    F --> G[(Persist proposal and status)]
-    G --> H[Human editorial review]
-    H --> I{Explicit approval?}
-    I -->|Not yet| J[Stop: await a human decision]
-    I -.->|Future gated phase| K[Writer and Editor]
-    K -.-> L[Separate publication decision]
+    IP["Idea Partner (broader concept)"] -.-> B["Idea brief in WordPress"]
+    B --> P["Authenticated WordPress proxy and n8n validation"]
+    P --> CD["Creative Director (coordinating agent)"]
+    CD <--> R["Researcher (Phase 1 available)"]
+    CD -.-> W["Writer (configured; Phase 2 gated)"]
+    CD -.-> E["Editor (configured; Phase 2 gated)"]
+    CD --> S["Structured editorial direction"]
+    S --> H{"Human editorial review"}
+    H -->|"Not approved"| STOP["Stop and await decision"]
+    H -.->|"Future explicit approval"| W
+    W -.-> E
+    E -.-> PUB["Separate publication decision"]
     classDef future stroke-dasharray: 5 5
-    class K,L future
+    class IP,W,E,PUB future
 ```
 
-The diagram distinguishes **the verified Phase 1 path** from a **planned, gated production path** (dashed links). In the private October 2026 working snapshot, editorial direction was generated, validated and displayed for human review. The later writing, editing and publication path was **disabled or untested**. This repo does not claim otherwise.
+**Solid lines** describe the verified Phase 1 direction and review path. **Dashed lines** show conceptual or later gated stages; they do not imply those stages were tested end to end. The Creative Director, Researcher, Writer and Editor nodes are present in the private n8n export, but Writer and Editor were not permitted to run during the verified Phase 1 workflow.
 
-### The roles
+### Agent responsibilities
 
-- **Creative Director:** establishes editorial direction and coordinates bounded research.
-- **Researcher:** supports the direction with a research dossier and source checks.
-- **Writer:** intended to produce a draft only after a later approval gate.
-- **Editor:** intended to evaluate a draft independently, not to approve publication automatically.
-
-An Idea Partner role belongs to the broader editorial concept, but it is not a separate executable agent in the archived Phase 1 n8n canvas described here.
+- **Creative Director:** leads editorial direction and coordinates specialist contributions.
+- **Researcher:** gathers and evaluates supporting material and sources; available to the Creative Director in Phase 1.
+- **Writer:** develops a draft from an approved direction; configured for a later, disabled production phase.
+- **Editor:** independently critiques and reviews drafted material; also gated for later production.
+- **Idea Partner:** helps develop or challenge the initial idea in the wider concept; not a distinct executable node in the archived Phase 1 n8n canvas.
+- **Human reviewer:** controls whether the process proceeds. Agent output is not itself editorial approval or permission to publish.
 
 ## What is actually demonstrated here
 
@@ -53,7 +58,7 @@ The JSON was checked for structural consistency, but has **not** been executed i
 
 | Choice | Why it matters |
 | --- | --- |
-| Separate editorial roles | Makes responsibilities explicit instead of asking one prompt to do everything. |
+| Creative Director coordinating three specialist agents | Distinguishes orchestration, research, drafting and independent review instead of asking one prompt to do everything. |
 | Structured proposal contract | A proposal can be inspected and validated before a person acts on it. |
 | Deterministic state checks | Approval and publication restrictions should not depend on an AI model obeying instructions. |
 | Human review before drafting | Editorial direction is something to discuss, not an implicit command to produce or publish. |
